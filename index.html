@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transaction — Premium Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="./script.js"></script>
+</head>
+<body class="theme-dark">
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar glass">
+      <div class="brand">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l7 4v6c0 5-7 10-7 10s-7-5-7-10V6l7-4z"></path>
+        </svg>
+        <span>Transaction</span>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" href="#overview">
+          <span class="icon">🏠</span><span class="label">Overview</span>
+        </a>
+        <a class="nav-item" href="transfer.html">
+  <span class="icon">💸</span><span class="label">Transfers</span>
+</a>
+
+        <a class="nav-item" href="fx.html">
+  <span class="icon">💱</span><span class="label">FX Convert</span>
+</a>
+
+        <a class="nav-item" href="#reports">
+          <span class="icon">📊</span><span class="label">Reports</span>
+        </a>
+        <a class="nav-item" href="#settings">
+          <span class="icon">⚙️</span><span class="label">Settings</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="collapseBtn" class="btn ghost w-full">⇤ Collapse</button>
+      </div>
+    </aside>
+
+    
+    <main class="main">
+      <header class="topbar glass">
+        <div class="search">
+          <input id="searchInput" class="input" placeholder="Search transactions, payees..." />
+        </div>
+        <div class="actions">
+          <button id="themeToggle" class="btn ghost" title="Toggle theme">🌓</button>
+          <button class="btn primary">New Transfer</button>
+          <div class="avatar" title="Profile">BR</div>
+        </div>
+      </header>
+
+      <section class="content">
+      
+        <div class="grid grid-4">
+          <div class="card kpi glass">
+            <div class="kpi-title">Total Balance</div>
+            <div class="kpi-value">₹ 12,48,900</div>
+            <div class="kpi-trend up">+3.1% MoM</div>
+          </div>
+          <div class="card kpi glass">
+            <div class="kpi-title">This Week Spent</div>
+            <div class="kpi-value">₹ 34,560</div>
+            <div class="kpi-trend down">-1.2% WoW</div>
+          </div>
+          <div class="card kpi glass">
+            <div class="kpi-title">Incoming</div>
+            <div class="kpi-value">₹ 2,10,400</div>
+            <div class="kpi-trend up">+6.8%</div>
+          </div>
+          <div class="card kpi glass">
+            <div class="kpi-title">FX Rate (INR→USD)</div>
+            <div class="kpi-value">0.012</div>
+            <div class="kpi-note">Demo value</div>
+          </div>
+        </div>
+
+       
+        <div class="grid grid-2">
+          <div class="card glass">
+            <div class="card-header">
+              <h3>Cash Flow (Last 12 months)</h3>
+              <div class="card-actions">
+                <select class="input sm" id="chartRange">
+                  <option>12M</option>
+                  <option>6M</option>
+                  <option>3M</option>
+                </select>
+              </div>
+            </div>
+            <canvas id="cashflowChart" height="120"></canvas>
+          </div>
+
+          <div class="card glass">
+            <div class="card-header">
+              <h3>Recent Transactions</h3>
+              <button class="btn ghost sm">View All</button>
+            </div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th><th>Details</th><th>Category</th><th>Amount</th><th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2025-09-06</td><td>Uber Ride</td><td>Transport</td><td>- ₹ 320</td><td><span class="badge success">Settled</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-09-06</td><td>Salary</td><td>Income</td><td>+ ₹ 75,000</td><td><span class="badge success">Settled</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-09-05</td><td>Spotify</td><td>Subscription</td><td>- ₹ 119</td><td><span class="badge pending">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>2025-09-04</td><td>Swiggy</td><td>Food</td><td>- ₹ 640</td><td><span class="badge failed">Failed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+     
+        <div class="card glass">
+          <div class="card-header">
+            <h3>FX Converter</h3>
+          </div>
+          <form class="fx-grid" id="fxForm">
+            <div>
+              <label class="label">From</label>
+              <select class="input" id="fromCur">
+                <option value="INR" selected>INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">To</label>
+              <select class="input" id="toCur">
+                <option value="USD" selected>USD</option>
+                <option value="INR">INR</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Amount</label>
+              <input class="input" type="number" id="amount" value="1000"/>
+            </div>
+            <div class="fx-actions">
+              <button type="submit" class="btn primary">Convert</button>
+              <div id="fxResult" class="muted"></div>
+            </div>
+          </form>
+        </div>
+
+      </section>
+    </main>
+  </div>
+</body>
+</html>
