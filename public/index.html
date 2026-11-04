@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CurrencySwap · Your money, in motion</title>
+    <link rel="stylesheet" href="/app.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/">↗ CurrencySwap<span>WALLET LAB</span></a
+      ><span class="pill">Simulated funds only</span
+      ><button id="logout" class="quiet" hidden>Sign out</button>
+    </header>
+    <main>
+      <section id="auth" class="auth-layout">
+        <div>
+          <p class="eyebrow">A WORLD OF POSSIBILITIES</p>
+          <h1>Your money.<br />More possibilities.</h1>
+          <p class="lead">
+            One wallet. Five currencies. A simple space to explore conversions
+            and transfers.
+          </p>
+          <div class="currency-art" aria-hidden="true">
+            <span>₹</span><span>$</span><span>€</span><span>£</span
+            ><span>¥</span>
+          </div>
+          <p class="muted">
+            A portfolio sandbox. No bank connection or real payments.
+          </p>
+        </div>
+        <div class="card">
+          <div class="tabs">
+            <button id="loginTab" class="selected">Sign in</button
+            ><button id="signupTab">Create account</button>
+          </div>
+          <h2 id="authTitle">Welcome back</h2>
+          <p class="muted" id="authHint">Sign in to your personal wallet.</p>
+          <form id="authForm">
+            <label id="nameLabel" hidden
+              >Full name<input
+                id="name"
+                name="name"
+                autocomplete="name"
+                minlength="2"
+                maxlength="80" /></label
+            ><label
+              >Email address<input
+                id="email"
+                type="email"
+                autocomplete="email"
+                required
+                maxlength="254" /></label
+            ><label
+              >Password<input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                minlength="10"
+                maxlength="128"
+                required /></label
+            ><button class="primary" id="authSubmit">Sign in →</button>
+          </form>
+          <p class="muted small">
+            New accounts receive ₹10,000 in simulated funds.
+          </p>
+        </div>
+      </section>
+      <section id="dashboard" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">YOUR PERSONAL WALLET</p>
+            <h1 id="greeting">Overview</h1>
+            <p class="muted">All your currencies. One clear view.</p>
+          </div>
+          <button id="refresh" class="quiet">↻ Refresh</button>
+        </div>
+        <div id="wallets" class="wallets"></div>
+        <div class="grid">
+          <section class="card">
+            <p class="eyebrow">MAKE YOUR NEXT MOVE</p>
+            <h2>Exchange currencies</h2>
+            <form id="convertForm">
+              <div class="row">
+                <label>From<select id="from"></select></label
+                ><label>To<select id="to"></select></label>
+              </div>
+              <label
+                >Amount<input
+                  id="convertAmount"
+                  type="number"
+                  min="0.01"
+                  max="1000000"
+                  step="0.01"
+                  value="100"
+                  required
+              /></label>
+              <p id="quote" class="quote"></p>
+              <p class="muted small">
+                Illustrative fixed rates · no fees · not market quotes
+              </p>
+              <button class="primary">Exchange simulated funds</button>
+            </form>
+          </section>
+          <section class="card">
+            <p class="eyebrow">SEND WITHIN THE SANDBOX</p>
+            <h2>Transfer funds</h2>
+            <form id="transferForm">
+              <label
+                >Recipient’s registered email<input
+                  id="recipient"
+                  type="email"
+                  required
+                  autocomplete="off"
+              /></label>
+              <div class="row">
+                <label>Currency<select id="transferCurrency"></select></label
+                ><label
+                  >Amount<input
+                    id="transferAmount"
+                    type="number"
+                    min="0.01"
+                    max="1000000"
+                    step="0.01"
+                    required
+                /></label>
+              </div>
+              <p class="muted small">
+                Transfers move demo funds between registered accounts.
+              </p>
+              <button class="primary">Review transfer →</button>
+            </form>
+          </section>
+        </div>
+        <section class="card history">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">THE FULL PICTURE</p>
+              <h2>Recent activity</h2>
+            </div>
+            <label class="search"
+              >Search activity<input
+                id="search"
+                type="search"
+                placeholder="Currency, recipient, type…" /></label
+            ><button id="export" class="quiet">Export CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Details</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody id="transactions"></tbody>
+            </table>
+          </div>
+          <p class="muted small">Showing your most recent 100 entries.</p>
+        </section>
+      </section>
+      <p id="notice" role="status" aria-live="polite" hidden></p>
+      <dialog id="confirm">
+        <h2>Confirm transfer</h2>
+        <p id="confirmation"></p>
+        <p class="muted">This transfers simulated funds only.</p>
+        <div class="row">
+          <button id="cancelTransfer" class="quiet">Cancel</button
+          ><button id="confirmTransfer" class="primary">
+            Confirm transfer
+          </button>
+        </div>
+      </dialog>
+    </main>
+    <footer>
+      CurrencySwap / Built for exploration · <span id="year"></span>
+    </footer>
+  </body>
+</html>
